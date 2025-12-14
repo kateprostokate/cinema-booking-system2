@@ -1,20 +1,111 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# ИДЕМВКИНО - Система бронирования билетов в кинотеатр
 
-# Run and deploy your AI Studio app
+Веб-приложение для бронирования билетов в кинотеатр с административной панелью управления.
 
-This contains everything you need to run your app locally.
+## Возможности
 
-View your app in AI Studio: https://ai.studio/apps/temp/2
+### Для пользователей
+- Просмотр расписания сеансов на 7 дней вперед
+- Выбор фильма и времени сеанса
+- Интерактивная схема зала с выбором мест
+- Страница оплаты
+- Генерация билетов с QR-кодом
 
-## Run Locally
+### Для администраторов
+- Авторизация в административной панели
+- Управление залами (создание, удаление, настройка конфигурации)
+- Управление фильмами (добавление, удаление)
+- Управление сеансами (создание, удаление)
+- Настройка цен на места
+- Открытие/закрытие залов для бронирования
 
-**Prerequisites:**  Node.js
+## Технологии
 
+- **React** 19.2.0
+- **React Router DOM** 7.9.5
+- **qrcode.react** 4.2.0
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Установка
+
+1. Клонируйте репозиторий:
+```bash
+git clone <repository-url>
+cd cinema-booking-system2
+```
+
+2. Установите зависимости:
+```bash
+npm install
+```
+
+## Запуск
+
+### Режим разработки
+```bash
+npm run dev
+```
+
+### Сборка для продакшена
+```bash
+npm run build
+```
+
+### Предпросмотр продакшен-сборки
+```bash
+npm run preview
+```
+
+## Структура проекта
+
+```
+cinema-booking-system2/
+├── pages/
+│   ├── user/              # Страницы для пользователей
+│   │   ├── MainPage.jsx   # Главная страница с расписанием
+│   │   ├── HallPage.jsx   # Страница выбора мест
+│   │   ├── PaymentPage.jsx # Страница оплаты
+│   │   └── TicketPage.jsx  # Страница с билетом
+│   └── admin/             # Страницы администратора
+│       ├── AdminLoginPage.jsx
+│       └── AdminDashboard.jsx
+├── contexts/              # React Context для состояния
+│   ├── AuthContext.jsx    # Контекст авторизации
+│   └── DataContext.jsx    # Контекст данных (залы, фильмы, сеансы)
+├── services/
+│   └── api.js             # API сервис для работы с backend
+├── public/
+│   └── images/            # Изображения (фоны, экран)
+├── App.jsx                # Главный компонент приложения
+└── index.jsx              # Точка входа
+
+```
+
+## API
+
+Приложение использует внешний API сервер:
+- **Base URL**: `https://shfe-diplom.neto-server.ru`
+
+Основные эндпоинты:
+- `GET /alldata` - получение всех данных (залы, фильмы, сеансы)
+- `POST /login` - авторизация администратора
+- `POST /hall` - создание зала
+- `DELETE /hall/:id` - удаление зала
+- `POST /hall/:id` - обновление конфигурации зала
+- `POST /price/:id` - обновление цен
+- `POST /open/:id` - открытие/закрытие зала
+- `POST /film` - создание фильма
+- `DELETE /film/:id` - удаление фильма
+- `POST /seance` - создание сеанса
+- `DELETE /seance/:id` - удаление сеанса
+- `GET /hallconfig` - получение конфигурации зала для сеанса
+- `POST /ticket` - покупка билетов
+
+## Особенности
+
+- Адаптивный дизайн
+- Разделение на клиентскую и административную части
+- Защищенные маршруты для администратора
+- Интерактивная схема зала
+- Генерация QR-кодов для билетов
+- Использование React Context для управления состоянием
+
