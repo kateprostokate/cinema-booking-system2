@@ -25,35 +25,10 @@
 - **React Router DOM** 7.9.5
 - **qrcode.react** 4.2.0
 
-## Установка
-
-1. Клонируйте репозиторий:
-```bash
-git clone <repository-url>
-cd cinema-booking-system2
-```
-
-2. Установите зависимости:
-```bash
-npm install
-```
 
 ## Запуск
 
-### Режим разработки
-```bash
-npm run dev
-```
-
-### Сборка для продакшена
-```bash
-npm run build
-```
-
-### Предпросмотр продакшен-сборки
-```bash
-npm run preview
-```
+ https://kateprostokate.github.io/cinema-booking-system2/
 
 ## Структура проекта
 
