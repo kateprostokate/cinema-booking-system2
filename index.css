@@ -1,0 +1,699 @@
+/* Base layout helpers from Figma spec */
+.layout-990 { width: 990px; margin-left: auto; margin-right: auto; }
+.header-bar { padding: 14px; height: 68px; }
+.heading-1 {
+  margin: 0 auto;
+  width: 212px; max-width: 962px; height: auto; max-height: none;
+  font-family: 'Roboto', sans-serif; font-style: normal; font-weight: 900;
+  font-size: 34px; line-height: 39px; text-transform: uppercase;
+  color: #FFFFFF; display: flex; flex-direction: column; align-items: flex-start;
+}
+
+.heading-1-thin {
+  font-weight: 100; /* extra thin для буквы В */
+}
+
+.heading-1-subtitle {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  text-transform: none;
+  color: #FFFFFF;
+}
+.btn-login-figma {
+  width: 71px; height: 40px; padding: 12px; border-radius: 3px;
+  background: #16A6AF; color: #FFFFFF; font-weight: 500; font-size: 14px; line-height: 16px;
+  text-transform: uppercase; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0px 3px 3px rgba(0,0,0,0.24), 0px 0px 3px rgba(0,0,0,0.12);
+}
+
+/* Main movie list */
+.main-wrap { gap: 30px; }
+
+/* Payment page */
+.payment-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 14px 40px;
+}
+
+/* Ticket page */
+.ticket-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 14px 40px;
+}
+
+.ticket-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ticket-section {
+  width: 990px;
+  max-width: 100%;
+  min-height: 537px;
+}
+
+.ticket-header {
+  position: relative;
+  width: 100%;
+  background: rgba(241, 235, 230, 0.95);
+  padding: 25px 15px;
+  box-sizing: border-box;
+  border-radius: 2px 2px 0 0;
+}
+
+.ticket-title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 25px;
+  text-transform: uppercase;
+  color: #C76F00;
+  margin: 0;
+}
+
+.ticket-info-wrapper {
+  position: relative;
+  width: 100%;
+  background: rgba(241, 235, 230, 0.95);
+  padding: 20px 15px 24px 15px;
+  box-sizing: border-box;
+  border-radius: 0 0 2px 2px;
+  margin-top: 3px;
+}
+
+.ticket-info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.ticket-line {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  color: #000000;
+}
+
+.ticket-line-label {
+  font-weight: 400;
+}
+
+.ticket-line-value {
+  font-weight: 700;
+}
+
+.ticket-qr-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+.ticket-qr-inner {
+  background: #FFFFFF;
+  padding: 16px;
+  border-radius: 4px;
+}
+
+.ticket-hint-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ticket-hint {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
+  color: #000000;
+}
+
+.payment-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.payment-section {
+  width: 990px;
+  max-width: 100%;
+  min-height: 406px;
+}
+
+.payment-header {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background: rgba(241, 235, 230, 0.95);
+  padding: 25px 15px;
+  box-sizing: border-box;
+  border-radius: 2px 2px 0 0;
+}
+
+.payment-title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 25px;
+  text-transform: uppercase;
+  color: #C76F00;
+  margin: 0;
+}
+
+.payment-ticket-wrapper {
+  position: relative;
+  width: 100%;
+  background: rgba(241, 235, 230, 0.95);
+  padding: 20px 15px 24px 15px;
+  box-sizing: border-box;
+  border-radius: 0 0 2px 2px;
+  margin-top: 0;
+}
+
+/* "Оторванный билет" — декоративные полоски сверху и снизу */
+.payment-strip {
+  width: 990px;
+  max-width: 100%;
+  height: 3px;
+  background-image: url('/images/ticket-border.png');
+  background-repeat: repeat-x;
+  background-size: auto 3px;
+}
+
+.payment-strip-top {
+  margin-bottom: 0;
+}
+
+.payment-strip-bottom {
+  margin-top: 0;
+}
+
+.payment-ticket-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.payment-line {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  color: #000000;
+}
+
+.payment-line-label {
+  font-weight: 400;
+}
+
+.payment-line-value {
+  font-weight: 700; /* жирный: фильм, места, зал, время, стоимость */
+}
+
+.payment-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 337px;
+  max-width: 100%;
+  height: 40px;
+  margin: 0 auto 24px auto;
+  background: #16A6AF;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.24), 0px 0px 3px rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
+  border: none;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.payment-button:disabled {
+  background: #6B7280;
+  cursor: not-allowed;
+}
+
+.payment-error {
+  text-align: center;
+  margin-bottom: 12px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  color: #DC2626;
+}
+
+.payment-hint-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.payment-hint {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300; /* более тонкий текст снизу */
+  font-size: 14px;
+  line-height: 16px;
+  color: #000000;
+}
+
+/* Hall (seat selection) page */
+.hall-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 14px 40px;
+}
+
+.hall-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.hall-section {
+  width: 990px;
+  max-width: 100%;
+  min-height: 573px;
+  background: rgba(241, 235, 230, 0.95);
+  border-radius: 2px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.hall-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 15px;
+}
+
+.hall-info-description {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+}
+
+.hall-film-title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 18px;
+  color: #000000;
+  margin: 0 0 7px 0;
+}
+
+.hall-seance-time {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
+  color: #000000;
+  margin: 0;
+}
+
+.hall-info-hall {
+  display: flex;
+  align-items: flex-end;
+}
+
+.hall-name {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 18px;
+  color: #000000;
+  margin: 6px 0 0 0; /* под строкой времени сеанса */
+}
+
+.hall-scheme {
+  position: relative;
+  background: #171D24;
+  padding: 15px 30px 15px 30px;
+}
+
+.hall-scheme-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0;
+}
+
+.hall-scheme-screen-image {
+  width: 100%;
+  max-width: 284px; /* ширина как у схемы зала */
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+.hall-scheme-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 0 0 0;
+  gap: 4px;
+}
+
+.hall-scheme-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.hall-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 30px 20px 30px; /* снизу добавили отступ для полоски фона */
+  gap: 24px;
+  background: #171D24;
+  color: #FFFFFF;
+}
+
+.hall-legend-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hall-legend-col-left {
+  align-items: flex-start;
+}
+
+.hall-legend-col-right {
+  align-items: flex-start;
+}
+
+.hall-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hall-chair {
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid #525252;
+}
+
+.hall-chair-standart {
+  background: #FFFFFF;
+}
+
+.hall-chair-vip {
+  background: #F9953A;
+}
+
+.hall-chair-taken {
+  background: transparent;
+}
+
+.hall-chair-selected {
+  width: 24px;
+  height: 24px;
+  background: #25C4CE;
+  box-shadow: 0 0 4px #16A6AF;
+}
+
+.hall-legend-text {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.hall-booking-button {
+  position: relative;
+  margin: 30px auto 30px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 232px;
+  height: 40px;
+  background: #16A6AF;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.24), 0px 0px 3px rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
+  border: none;
+  text-transform: uppercase;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.hall-booking-button:disabled {
+  background: #6B7280;
+  cursor: not-allowed;
+}
+
+/* Responsive hall page */
+@media (max-width: 480px) {
+  .payment-section,
+  .ticket-section {
+    width: 100%;
+  }
+  .payment-button {
+    width: 100%;
+  }
+  .ticket-qr-inner {
+    padding: 12px;
+  }
+  .hall-section {
+    width: 100%;
+  }
+  .hall-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .hall-scheme {
+    padding: 12px 12px 12px 12px;
+  }
+  .hall-legend {
+    justify-content: center;
+    padding: 16px 12px 16px 12px; /* снизу тоже оставляем тёмную полоску */
+    gap: 16px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 1024px) {
+  .hall-section {
+    width: 768px;
+    max-width: 100%;
+  }
+}
+.movie-section {
+  width: 990px;
+  max-width: 100%;
+  min-height: 350px;
+  height: auto;
+  background: rgba(241,235,230,0.95);
+  border-radius: 2px;
+  padding: 15px;
+  color: #000;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.movie-info {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: auto;
+  align-items: flex-start;
+}
+.movie-poster { width: 125px; height: 205px; padding-bottom: 0; position: relative; flex: 0 0 125px; }
+.movie-poster img { width: 125px; height: 175px; object-fit: cover; display: block; }
+.movie-description { padding-left: 15px; gap: 10px; width: auto; height: auto; display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; word-break: break-word; }
+.movie-title { font-weight: 700; font-size: 16px; line-height: 18px; color: #000; }
+.movie-synopsis { font-weight: 400; font-size: 14px; line-height: 16px; color: #000; }
+.movie-meta { display: flex; gap: 2.5px; font-weight: 300; font-size: 14px; line-height: 16px; color: #000; }
+
+.hall-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 7px;
+  width: 100%;
+  margin-top: 0;
+}
+.hall-title {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 18px;
+  color: #000;
+  margin-top: 0; /* убрать отступ сверху даже при одном зале */
+}
+.seances-row { display: flex; flex-wrap: wrap; gap: 4px; padding-bottom: 4px; width: 100%; box-sizing: border-box; }
+.seance-chip { flex: 0 0 53px; width: 53px; height: 33px; border-radius: 2px; background: #fff;
+  box-shadow: 0px 2px 2px rgba(0,0,0,0.24), 0px 0px 2px rgba(0,0,0,0.12);
+  display: flex; align-items: center; justify-content: center; font-size: 15px; line-height: 17px; color: #000; }
+.seance-chip.disabled { background: #e5e7eb; color: #6b7280; cursor: not-allowed; }
+
+/* Day navigator wrapper (approximation) */
+.page-nav { height: 58px; padding-bottom: 10px; }
+
+/* Mobile (<= 420px) layout from spec */
+.header-actions { display: flex; gap: 16px; align-items: center; }
+
+/* Mobile: <=480px */
+@media (max-width: 480px) {
+  .layout-990 { width: 100%; padding-left: 14px; padding-right: 14px; }
+  .header-bar { height: 40px; padding: 0; display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start !important; }
+  .heading-1 { width: 212px; max-width: 362.4px; height: 39px; font-size: 34px; line-height: 39px; }
+  .btn-login-figma { width: 71px; height: 40px; padding: 12px; display: flex !important; }
+  .header-actions { flex-wrap: nowrap; }
+
+  .main-wrap { gap: 30px; }
+  .movie-section { width: min(390px, 100%); height: auto; min-height: 350px; margin: 0 auto; padding: 15px; }
+  .movie-info { position: relative; width: 100%; height: auto; min-height: 205px; }
+  .movie-poster { width: 125px; height: 205px; }
+  .movie-poster img { width: 125px; height: 175px; }
+  .movie-description { width: auto; height: auto; padding-left: 15px; flex: 1 1 auto; min-width: 0; }
+  .movie-title { font-size: 16px; line-height: 18px; }
+  .movie-synopsis { font-size: 14px; line-height: 16px; }
+  .movie-meta { gap: 2.5px; font-size: 14px; line-height: 16px; }
+
+  .hall-block { margin-top: 12px; width: 100%; }
+  .hall-title { font-size: 16px; line-height: 18px; }
+  .seances-row { gap: 4px; padding-bottom: 4px; width: 100%; }
+  .seance-chip { width: 53px; height: 33px; font-size: 15px; line-height: 17px; }
+
+  .page-nav { position: relative; height: 58px; padding: 0 0 10px; left: 0; right: 0; }
+}
+
+/* Tablet: 481px–1024px */
+@media (min-width: 481px) and (max-width: 1024px) {
+  .layout-990 { width: 768px; margin-left: auto; margin-right: auto; padding-left: 0; padding-right: 0; }
+  .header-bar { height: 40px; padding: 0; display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; }
+  .heading-1 { width: 212px; max-width: 740px; height: 39px; font-size: 34px; line-height: 39px; }
+  .btn-login-figma { width: 71px; height: 40px; padding: 12px; }
+  .header-actions { flex-wrap: nowrap; }
+
+  .main-wrap { gap: 30px; width: 768px; margin-left: auto; margin-right: auto; }
+  .movie-section { width: 768px; min-height: 350px; height: auto; margin: 0 auto; padding: 15px; }
+  .movie-info { width: 100%; min-height: 205px; }
+  .movie-poster { width: 125px; height: 205px; }
+  .movie-poster img { width: 125px; height: 175px; }
+  .movie-description { width: calc(100% - 125px - 15px); height: auto; padding-left: 15px; flex: 0 1 auto; min-width: 0; }
+  .movie-title { font-size: 16px; line-height: 18px; }
+  .movie-synopsis { font-size: 14px; line-height: 16px; }
+  .movie-meta { gap: 2.5px; font-size: 14px; line-height: 16px; }
+
+  .hall-block { margin-top: 12px; width: 100%; }
+  .hall-title { font-size: 16px; line-height: 18px; }
+  .seances-row { gap: 4px; padding-bottom: 4px; width: 100%; }
+  .seance-chip { width: 53px; height: 33px; font-size: 15px; line-height: 17px; }
+
+  .page-nav { width: 768px; height: 58px; padding-bottom: 10px; margin: 0 auto; }
+}
+
+/* Desktop: >=1025px */
+@media (min-width: 1025px) {
+  .layout-990 { width: 990px; margin-left: auto; margin-right: auto; }
+  .main-wrap { width: 990px; margin-left: auto; margin-right: auto; }
+  .movie-section { width: 990px; min-height: 350px; height: auto; }
+  .page-nav { width: 990px; margin: 0 auto; }
+}
+
+/* Strict mobile spec for 390px width */
+@media (max-width: 390px) {
+  .layout-990, .main-wrap, .page-nav { width: 390px; margin-left: auto; margin-right: auto; padding-left: 0; padding-right: 0; }
+  .header-bar { width: 390px; height: 40px; padding: 0; display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; }
+  .heading-1 { width: 212px; max-width: 362.4px; height: 39px; font-size: 34px; line-height: 39px; }
+  .btn-login-figma { width: 71px; height: 40px; padding: 12px; }
+
+  .movie-section { width: 390px; height: 350px; padding: 15px; }
+  .movie-info { width: 360px; height: 205px; margin: 0 auto; }
+  .movie-poster { width: 125px; height: 205px; padding-bottom: 30px; }
+  .movie-poster img { width: 125px; height: 175px; }
+  .movie-description { width: 235px; height: 205px; padding-left: 15px; flex: 0 0 235px; }
+  .movie-title { font-size: 16px; line-height: 18px; }
+  .movie-synopsis { font-size: 14px; line-height: 16px; }
+  .movie-meta { font-size: 14px; line-height: 16px; gap: 2.5px; }
+
+  .hall-block { width: 360px; margin-top: 12px; }
+  .hall-title { font-size: 16px; line-height: 18px; }
+  .seances-row { width: 360px; gap: 4px; padding-bottom: 4px; }
+  .seance-chip { width: 53px; height: 33px; font-size: 15px; line-height: 17px; }
+}
+
+/* Addhall popup: base styles */
+.popup_addhall {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+/* Addhall popup: mobile layout from spec */
+@media (max-width: 480px) {
+  .popup_addhall {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+  .popup_addhall .popup__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    max-width: 390px;
+  }
+
+  .popup_addhall .popup__header {
+    padding: 16px 16px 14px;
+  }
+
+  .popup_addhall .popup__title {
+    font-size: 22px;
+    line-height: 25px;
+  }
+
+  .popup_addhall .popup__form {
+    padding: 0 0 8px;
+  }
+
+  .popup_addhall .popup__form-label-wrap {
+    width: 100%;
+    max-width: 370px;
+  }
+
+  .popup_addhall .popup__input {
+    width: 100%;
+    max-width: 370px;
+  }
+
+  .popup_addhall .conf-step__buttons {
+    width: 100%;
+    max-width: 200px;
+    margin-bottom: 20px;
+  }
+
+  .popup_addhall .conf-step__button-primary,
+  .popup_addhall .conf-step__button-secondary {
+    width: 100%;
+  }
+}
