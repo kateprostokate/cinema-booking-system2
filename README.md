@@ -55,6 +55,30 @@ npm run build
 npm run preview
 ```
 
+## Деплой на GitHub Pages
+
+1. Соберите проект:
+```bash
+npm run build
+```
+
+2. Убедитесь, что в настройках репозитория GitHub Pages указана папка `dist`:
+   - Перейдите в Settings → Pages
+   - В разделе "Source" выберите "Deploy from a branch"
+   - Выберите ветку (например, `main`) и папку `/dist`
+
+3. Закоммитьте и запушьте изменения:
+```bash
+git add dist
+git commit -m "Deploy to GitHub Pages"
+git push
+```
+
+4. После деплоя сайт будет доступен по адресу:
+   `https://kateprostokate.github.io/cinema-booking-system2/`
+
+**Важно:** Убедитесь, что файл `.nojekyll` находится в папке `dist` (он создается автоматически при сборке).
+
 ## Структура проекта
 
 ```

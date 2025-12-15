@@ -119,7 +119,7 @@ const HallPage = () => {
 
           <div className="hall-scheme">
             <div className="hall-scheme-screen">
-              <img src="/images/screen.png" alt="Экран" className="hall-scheme-screen-image" />
+              <img src={`${import.meta.env.BASE_URL}images/screen.png`} alt="Экран" className="hall-scheme-screen-image" />
             </div>
             <div className="hall-scheme-wrapper">
               {hallConfig.map((row, rowIndex) => (
