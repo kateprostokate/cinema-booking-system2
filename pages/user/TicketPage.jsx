@@ -47,10 +47,13 @@ const TicketPage = () => {
     <div className="ticket-page">
       <main className="ticket-main layout-990">
         <section className="ticket-section">
+          <div className="decoration-strip" />
           <div className="ticket-header">
             <h2 className="ticket-title">Электронный билет</h2>
           </div>
+          <div className="decoration-strip" />
 
+          <div className="decoration-strip" />
           <div className="ticket-info-wrapper">
             <div className="ticket-info-block">
               <p className="ticket-line">
@@ -90,6 +93,7 @@ const TicketPage = () => {
               <p className="ticket-hint">Приятного просмотра!</p>
             </div>
           </div>
+          <div className="decoration-strip" />
         </section>
       </main>
     </div>

@@ -1,23 +1,184 @@
-// FIX: Added useMemo to the react import to resolve 'Cannot find name useMemo' error.
-import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import ApiService from '../../services/api';
 import { useData } from '../../contexts/DataContext';
+
+const sectionShadow = '0px 0px 3px 0px rgba(0,0,0,0.12), 0px 3px 3px 0px rgba(0,0,0,0.24)';
+const activeTabShadow = '0px 0px 2px 0px rgba(0,0,0,0.12), 0px 2px 2px 0px rgba(0,0,0,0.24), 0px 6px 8px 0px rgba(0,0,0,0.24)';
+const assetBase = import.meta.env.BASE_URL;
+
+const HallTab = ({ hall, isActive, onClick }) => (
+  <button
+    onClick={onClick}
+    style={{
+      width: isActive ? '90px' : '81px',
+      height: isActive ? '46px' : '42px',
+      background: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.45)',
+      borderRadius: '3px',
+      border: 'none',
+      boxShadow: isActive ? activeTabShadow : sectionShadow,
+      cursor: 'pointer',
+      fontFamily: 'Roboto, sans-serif',
+      fontWeight: isActive ? 900 : 500,
+      fontSize: isActive ? '15px' : '14px',
+      lineHeight: isActive ? '1.067em' : '1.143em',
+      textTransform: 'uppercase',
+      color: '#000000',
+      padding: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      transition: 'all 0.15s ease',
+    }}
+  >
+    {hall.hall_name}
+  </button>
+);
+
+const ButtonPrimary = ({ children, onClick, type = 'button', style }) => (
+  <button
+    type={type}
+    onClick={onClick}
+    style={{
+      height: '40px',
+      padding: '11px 32px 12px',
+      background: '#16A6AF',
+      color: '#FFFFFF',
+      border: 'none',
+      borderRadius: '3px',
+      boxShadow: sectionShadow,
+      fontFamily: 'Roboto, sans-serif',
+      fontWeight: 500,
+      fontSize: '14px',
+      lineHeight: '1.143em',
+      textTransform: 'uppercase',
+      cursor: 'pointer',
+      ...style,
+    }}
+  >
+    {children}
+  </button>
+);
+
+const ButtonSecondary = ({ children, onClick, type = 'button', style }) => (
+  <button
+    type={type}
+    onClick={onClick}
+    style={{
+      width: '121px',
+      height: '40px',
+      padding: '11px 31px 12px',
+      background: '#FFFFFF',
+      color: '#63536C',
+      border: 'none',
+      borderRadius: '3px',
+      boxShadow: sectionShadow,
+      fontFamily: 'Roboto, sans-serif',
+      fontWeight: 500,
+      fontSize: '14px',
+      lineHeight: '1.143em',
+      textTransform: 'uppercase',
+      cursor: 'pointer',
+      ...style,
+    }}
+  >
+    {children}
+  </button>
+);
+
+const ChairIcon = ({ type, size = 26, onClick, style }) => {
+  const styles = {
+    standart: { background: '#C4C4C4', border: '1px solid #393939' },
+    vip: { background: '#B0D6D8', border: '1px solid #0A828A' },
+    disabled: { background: 'transparent', border: '1px solid #C4C4C4' },
+  };
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        width: `${size}px`,
+        height: `${size}px`,
+        borderRadius: '4px',
+        boxSizing: 'border-box',
+        cursor: onClick ? 'pointer' : 'default',
+        flexShrink: 0,
+        ...(styles[type] || styles.standart),
+        ...style,
+      }}
+    />
+  );
+};
 
 const AdminSection = ({ title, children, initiallyOpen = false }) => {
   const [isOpen, setIsOpen] = useState(initiallyOpen);
   return (
-    <div className="relative mb-px bg-[#EAE9EB]">
-      <div className="hidden md:block absolute left-[61px] top-0 bottom-0 w-0.5 bg-[#BC95D6] z-0" style={{ left: 'calc(40px + 22px - 1px)' }}></div>
+    <div style={{ position: 'relative', marginBottom: '1px', background: 'rgba(234, 233, 235, 0.95)' }}>
+      <div style={{
+        position: 'absolute',
+        left: '61px',
+        top: 0,
+        bottom: 0,
+        width: '2px',
+        background: '#BC95D6',
+        zIndex: -1,
+      }} />
       <header
         onClick={() => setIsOpen(!isOpen)}
-        className="relative bg-[#63536C] text-white py-6 md:py-8 pl-24 md:pl-32 pr-10 cursor-pointer flex justify-between items-center z-10"
+        style={{
+          position: 'relative',
+          background: '#63536C',
+          color: '#FFFFFF',
+          padding: '35px 42px 35px 104px',
+          height: '95px',
+          boxSizing: 'border-box',
+          cursor: 'pointer',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
       >
-        <div className="absolute left-[40px] top-1/2 -translate-y-1/2 w-11 h-11 bg-white border-4 border-[#BC95D6] rounded-full"></div>
-        <h2 className="text-lg md:text-2xl font-bold uppercase">{title}</h2>
-        <svg className={`w-6 h-6 transform transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+        <div style={{
+          position: 'absolute',
+          left: '61px',
+          top: '48px',
+          width: '2px',
+          height: '48px',
+          background: '#BC95D6',
+        }} />
+        <div style={{
+          position: 'absolute',
+          left: '40px',
+          top: '26px',
+          width: '44px',
+          height: '44px',
+          background: '#FFFFFF',
+          border: '4px solid #BC95D6',
+          borderRadius: '50%',
+          boxSizing: 'border-box',
+        }} />
+        <h2 style={{
+          fontFamily: 'Roboto, sans-serif',
+          fontWeight: 700,
+          fontSize: '22px',
+          lineHeight: '25px',
+          textTransform: 'uppercase',
+          margin: 0,
+        }}>{title}</h2>
+        <img
+          src={`${assetBase}images/chevron.svg`}
+          alt=""
+          width="24"
+          height="16"
+          style={{
+            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s ease',
+          }}
+        />
       </header>
       {isOpen && (
-        <div className="relative p-6 md:p-10 md:pl-32 z-10">
+        <div style={{
+          position: 'relative',
+          padding: '35px 42px 24px 104px',
+        }}>
           {children}
         </div>
       )}
@@ -59,88 +220,114 @@ const HallsManagement = () => {
   };
 
   return (
-    <div className="w-full max-w-[390px] md:max-w-none bg-[#EAE9EB] bg-opacity-95 p-4 md:p-0">
-      <p className="mb-4 font-normal text-base">Доступные залы:</p>
-      <ul className="mb-6 space-y-2">
+    <div>
+      <p style={{
+        fontFamily: 'Roboto, sans-serif',
+        fontWeight: 400,
+        fontSize: '16px',
+        lineHeight: '18px',
+        color: '#000000',
+        margin: '0 0 12px 0',
+      }}>Доступные залы:</p>
+      <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 20px 25px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {halls.map(hall => (
-          <li key={hall.id} className="flex items-center gap-2">
-            <span className="font-medium uppercase text-base">&ndash; {hall.hall_name}</span>
-            <button onClick={() => handleDeleteHall(hall.id)} className="w-5 h-5 bg-white shadow-md rounded-sm flex items-center justify-center text-[#63536C] hover:bg-gray-200 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z"/>
-              </svg>
+          <li key={hall.id} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <span style={{
+              fontFamily: 'Roboto, sans-serif',
+              fontWeight: 500,
+              fontSize: '16px',
+              lineHeight: '18px',
+              textTransform: 'uppercase',
+              color: '#000000',
+            }}>– {hall.hall_name} </span>
+            <button
+              onClick={() => handleDeleteHall(hall.id)}
+              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+            >
+              <img src={`${assetBase}images/delete-hall.svg`} alt="Удалить" width="20" height="20" />
             </button>
           </li>
         ))}
       </ul>
-      <div className="flex justify-center mt-8">
-        <button
-          onClick={() => setCreateHallModalOpen(true)}
-          className="bg-[#16A6AF] text-white px-8 py-3 rounded-[3px] shadow-md hover:bg-teal-600 transition-colors uppercase font-medium text-sm"
-          style={{ boxShadow: '0px 3px 3px rgba(0, 0, 0, 0.24), 0px 0px 3px rgba(0, 0, 0, 0.12)' }}
-        >
-          Создать зал
-        </button>
-      </div>
+      <ButtonPrimary onClick={() => setCreateHallModalOpen(true)} style={{ width: '159px' }}>
+        Создать зал
+      </ButtonPrimary>
 
       {isCreateHallModalOpen && (
         <div
-          className="popup_addhall fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[9999] px-4"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 9999,
+            padding: '0 16px',
+          }}
         >
-          <div
-            className="popup__content flex flex-col items-center w-full max-w-[390px] md:max-w-[960px] md:w-[960px] relative"
-            style={{ background: 'rgba(234, 233, 235, 0.95)' }}
-          >
-            <div className="popup__header flex flex-row justify-between items-center w-full px-4 md:px-[42px] py-4 bg-[#63536C]">
-              <h3 className="popup__title font-bold text-[20px] md:text-[22px] leading-[25px] uppercase text-white m-auto">
-                Добавление зала
-              </h3>
+          <div style={{ background: 'rgba(234, 233, 235, 0.95)', width: '960px', maxWidth: '100%' }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '0 42px',
+              height: '95px',
+              background: '#63536C',
+            }}>
+              <h3 style={{
+                fontFamily: 'Roboto, sans-serif',
+                fontWeight: 700,
+                fontSize: '22px',
+                lineHeight: '25px',
+                textTransform: 'uppercase',
+                color: '#FFFFFF',
+                margin: '0 auto',
+              }}>Добавление зала</h3>
               <button
                 type="button"
-                onClick={() => {
-                  setCreateHallModalOpen(false);
-                  setNewHallName('');
-                }}
-                className="popup__close w-[22px] h-[22px] text-white text-2xl leading-none hover:opacity-80 flex items-center justify-center"
-              >
-                &times;
-              </button>
+                onClick={() => { setCreateHallModalOpen(false); setNewHallName(''); }}
+                style={{ background: 'none', border: 'none', color: '#FFFFFF', fontSize: '28px', cursor: 'pointer', lineHeight: 1 }}
+              >&times;</button>
             </div>
             <form
               onSubmit={handleCreateHall}
-              className="popup__form flex flex-col items-center w-full gap-4 md:gap-[34px] pb-[35px] pt-[24px] md:pt-[34px] px-4"
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '34px', padding: '34px 16px 35px' }}
             >
-              <div className="popup__form-label-wrap flex flex-col items-start gap-[2px] w-full max-w-[370px] md:max-w-[750px]">
-                <label className="popup__label font-normal text-xs leading-[14px] text-[#848484]">Название зала</label>
+              <div style={{ width: '100%', maxWidth: '750px' }}>
+                <label style={{
+                  fontFamily: 'Roboto, sans-serif',
+                  fontWeight: 400,
+                  fontSize: '12px',
+                  lineHeight: '14px',
+                  color: '#848484',
+                  display: 'block',
+                  marginBottom: '2px',
+                }}>Название зала</label>
                 <input
                   type="text"
                   value={newHallName}
                   onChange={e => setNewHallName(e.target.value)}
                   placeholder='Например, «Зал 1»'
                   required
-                  className="popup__input w-full h-[35px] px-2 py-2 bg-white border border-[#B7B7B7] text-base text-gray-700 placeholder:text-[#757575]"
-                  style={{ fontFamily: 'Roboto' }}
+                  style={{
+                    width: '100%',
+                    height: '36px',
+                    padding: '8px 9px',
+                    background: '#FFFFFF',
+                    border: '1px solid #B7B7B7',
+                    fontFamily: 'Roboto, sans-serif',
+                    fontSize: '16px',
+                    color: '#000000',
+                    boxSizing: 'border-box',
+                  }}
                 />
               </div>
-              <div className="conf-step__buttons flex flex-col md:flex-row justify-center items-stretch md:items-start gap-[14px] w-full max-w-[200px] md:max-w-none">
-                <button
-                  type="submit"
-                  className="conf-step__button-primary flex justify-center items-center px-8 py-[11.2px] bg-[#16A6AF] text-white text-sm font-medium uppercase rounded-[3px] shadow-md hover:bg-[#148a92] transition-colors w-full md:w-auto"
-                  style={{ boxShadow: '0px 3px 3px rgba(0, 0, 0, 0.24), 0px 0px 3px rgba(0, 0, 0, 0.12)' }}
-                >
-                  Добавить зал
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setCreateHallModalOpen(false);
-                    setNewHallName('');
-                  }}
-                  className="conf-step__button-secondary flex justify-center items-center px-8 py-[11.2px] bg-white text-[#63536C] text-sm font-medium uppercase rounded-[3px] shadow-md hover:bg-gray-100 transition-colors w-full md:w-auto"
-                  style={{ boxShadow: '0px 3px 3px rgba(0, 0, 0, 0.24), 0px 0px 3px rgba(0, 0, 0, 0.12)' }}
-                >
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '14px' }}>
+                <ButtonPrimary type="submit">Добавить зал</ButtonPrimary>
+                <ButtonSecondary onClick={() => { setCreateHallModalOpen(false); setNewHallName(''); }}>
                   Отменить
-                </button>
+                </ButtonSecondary>
               </div>
             </form>
           </div>
@@ -206,65 +393,145 @@ const HallConfiguration = () => {
     }
   };
 
+  const labelStyle = {
+    fontFamily: 'Roboto, sans-serif',
+    fontWeight: 400,
+    fontSize: '12px',
+    lineHeight: '14px',
+    color: '#848484',
+    display: 'block',
+    marginBottom: '2px',
+  };
+
+  const inputStyle = {
+    width: '100px',
+    height: '36px',
+    padding: '8px 9px',
+    background: '#FFFFFF',
+    border: '1px solid #B7B7B7',
+    fontFamily: 'Roboto, sans-serif',
+    fontSize: '16px',
+    color: '#000000',
+    boxSizing: 'border-box',
+  };
+
   return (
     <div>
-      <div className="mb-4">
-        <p className="font-normal text-base">Выберите зал для конфигурации:</p>
-        <div className="flex flex-wrap gap-2 mt-2">
-          {halls.map(hall => (
-            <button key={hall.id} onClick={() => handleHallSelect(hall.id)} className={`px-4 py-3 rounded-sm shadow-md transition-all text-sm uppercase font-medium ${selectedHallId === hall.id ? 'bg-white scale-105 font-bold' : 'bg-white/70 hover:bg-white/90'}`}>
-              {hall.hall_name}
-            </button>
-          ))}
-        </div>
+      <p style={{
+        fontFamily: 'Roboto, sans-serif',
+        fontWeight: 400,
+        fontSize: '16px',
+        lineHeight: '18px',
+        color: '#000000',
+        margin: '0 0 12px 0',
+      }}>Выберите зал для конфигурации:</p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0', marginBottom: '24px' }}>
+        {halls.map(hall => (
+          <HallTab key={hall.id} hall={hall} isActive={selectedHallId === hall.id} onClick={() => handleHallSelect(hall.id)} />
+        ))}
       </div>
       {selectedHallId && (
         <div>
-          <div className="flex flex-wrap gap-x-6 gap-y-3 my-6 items-end">
+          <p style={{
+            fontFamily: 'Roboto, sans-serif',
+            fontWeight: 400,
+            fontSize: '16px',
+            lineHeight: '18px',
+            color: '#000000',
+            margin: '0 0 12px 0',
+          }}>Укажите количество рядов и максимальное количество кресел в ряду:</p>
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: '0', marginBottom: '24px', position: 'relative' }}>
             <div>
-              <label className="font-normal text-xs text-gray-600 block mb-1">Рядов, шт</label>
-              <input type="number" value={rows} onChange={e => handleGridSizeChange(Number(e.target.value), places)} className="w-24 p-2 border rounded border-gray-400" />
+              <label style={labelStyle}>Рядов, шт</label>
+              <input
+                type="number"
+                value={rows}
+                onChange={e => handleGridSizeChange(Number(e.target.value), places)}
+                style={inputStyle}
+              />
             </div>
-            <span className="text-gray-500 text-xl pb-2">x</span>
+            <span style={{
+              fontFamily: 'Consolas, monospace',
+              fontWeight: 400,
+              fontSize: '18px',
+              lineHeight: '21px',
+              color: '#848484',
+              padding: '0 7px',
+              marginBottom: '8px',
+            }}>x</span>
             <div>
-              <label className="font-normal text-xs text-gray-600 block mb-1">Мест, шт</label>
-              <input type="number" value={places} onChange={e => handleGridSizeChange(rows, Number(e.target.value))} className="w-24 p-2 border rounded border-gray-400" />
+              <label style={labelStyle}>Мест, шт</label>
+              <input
+                type="number"
+                value={places}
+                onChange={e => handleGridSizeChange(rows, Number(e.target.value))}
+                style={inputStyle}
+              />
             </div>
           </div>
-          <p className="font-normal text-base mb-2">Теперь вы можете указать типы кресел на схеме зала:</p>
-          <div className="flex flex-wrap gap-x-6 gap-y-2 mb-3 text-sm text-gray-700">
-            <span className="flex items-center gap-2"><div className="w-5 h-5 rounded-sm border border-gray-700 bg-gray-400"></div>&mdash; обычные кресла</span>
-            <span className="flex items-center gap-2"><div className="w-5 h-5 rounded-sm border border-teal-700 bg-[#B0D6D8]"></div>&mdash; VIP кресла</span>
-            <span className="flex items-center gap-2"><div className="w-5 h-5 rounded-sm border border-gray-400"></div>&mdash; заблокированные (нет кресла)</span>
+
+          <p style={{
+            fontFamily: 'Roboto, sans-serif',
+            fontWeight: 400,
+            fontSize: '16px',
+            lineHeight: '18px',
+            color: '#000000',
+            margin: '0 0 12px 0',
+          }}>Теперь вы можете указать типы кресел на схеме зала:</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '23px', marginBottom: '12px' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0' }}>
+              <ChairIcon type="standart" />
+              <span style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '14px', color: '#848484' }}> — обычные кресла </span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0' }}>
+              <ChairIcon type="vip" />
+              <span style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '14px', color: '#848484' }}> — VIP кресла </span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0' }}>
+              <ChairIcon type="disabled" />
+              <span style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '14px', color: '#848484' }}> — заблокированные (нет кресла)</span>
+            </span>
           </div>
-          <p className="text-xs text-gray-600 mb-4">Чтобы изменить вид кресла, нажмите по нему левой кнопкой мыши</p>
-          <div className="border border-black p-4 md:p-8 inline-block">
-            <div className="text-center text-black tracking-[19px] uppercase mb-6">Экран</div>
-            {config.map((row, rIndex) => (
-              <div key={rIndex} className="flex justify-center">
-                {row.map((seat, pIndex) => {
-                  let seatClass = '';
-                  switch (seat) {
-                    case 'standart': seatClass = 'bg-gray-400 border-gray-700'; break;
-                    case 'vip': seatClass = 'bg-[#B0D6D8] border-teal-700'; break;
-                    case 'disabled': seatClass = 'bg-transparent border-gray-400'; break;
-                    default: break;
-                  }
-                  return (
-                    <div
+          <p style={{
+            fontFamily: 'Roboto, sans-serif',
+            fontWeight: 400,
+            fontSize: '14px',
+            lineHeight: '16px',
+            color: '#848484',
+            margin: '0 0 16px 0',
+          }}>Чтобы изменить вид кресла, нажмите по нему левой кнопкой мыши</p>
+
+          <div style={{ border: '1px solid #000000', padding: '64px 0 36px', width: '100%', boxSizing: 'border-box' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <div style={{
+                fontFamily: 'Roboto, sans-serif',
+                fontWeight: 400,
+                fontSize: '16px',
+                lineHeight: '18px',
+                letterSpacing: '19px',
+                textTransform: 'uppercase',
+                color: '#000000',
+                textAlign: 'center',
+                marginBottom: '20px',
+              }}>экран</div>
+              {config.map((row, rIndex) => (
+                <div key={rIndex} style={{ display: 'flex', justifyContent: 'center', gap: '4px', marginBottom: '4px' }}>
+                  {row.map((seat, pIndex) => (
+                    <ChairIcon
                       key={pIndex}
+                      type={seat}
                       onClick={() => handleSeatClick(rIndex, pIndex)}
-                      className={`w-5 h-5 sm:w-6 sm:h-6 m-1 rounded-sm cursor-pointer transition-colors border ${seatClass}`}
-                    ></div>
-                  );
-                })}
-              </div>
-            ))}
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
-          <fieldset className="mt-6 flex justify-center gap-4">
-            <button onClick={() => selectedHallId && handleHallSelect(selectedHallId)} className="bg-white text-[#63536C] px-6 py-2 rounded-sm shadow-md hover:bg-gray-100 uppercase font-medium">Отмена</button>
-            <button onClick={handleSaveConfig} className="bg-[#16A6AF] text-white px-6 py-2 rounded-sm shadow-md hover:bg-teal-600 uppercase font-medium">Сохранить</button>
-          </fieldset>
+
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginTop: '17px' }}>
+            <ButtonSecondary onClick={() => selectedHallId && handleHallSelect(selectedHallId)}>Отмена</ButtonSecondary>
+            <ButtonPrimary onClick={handleSaveConfig}>Сохранить</ButtonPrimary>
+          </div>
         </div>
       )}
     </div>
@@ -307,35 +574,86 @@ const PriceConfiguration = () => {
     }
   };
 
+  const labelStyle = {
+    fontFamily: 'Roboto, sans-serif',
+    fontWeight: 400,
+    fontSize: '12px',
+    lineHeight: '14px',
+    color: '#848484',
+    display: 'block',
+    marginBottom: '2px',
+  };
+
+  const inputStyle = {
+    width: '100px',
+    height: '36px',
+    padding: '8px 9px',
+    background: '#FFFFFF',
+    border: '1px solid #B7B7B7',
+    fontFamily: 'Roboto, sans-serif',
+    fontSize: '16px',
+    color: '#000000',
+    boxSizing: 'border-box',
+  };
+
+  const helperText = {
+    fontFamily: 'Roboto, sans-serif',
+    fontWeight: 400,
+    fontSize: '14px',
+    lineHeight: '16px',
+    color: '#848484',
+  };
+
   return (
     <div>
-      <p className="font-normal text-base">Выберите зал для конфигурации:</p>
-      <div className="flex flex-wrap gap-2 my-4">
+      <p style={{
+        fontFamily: 'Roboto, sans-serif',
+        fontWeight: 400,
+        fontSize: '16px',
+        lineHeight: '18px',
+        color: '#000000',
+        margin: '0 0 12px 0',
+      }}>Выберите зал для конфигурации:</p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0', marginBottom: '24px' }}>
         {halls.map(hall => (
-          <button key={hall.id} onClick={() => handleHallSelect(hall.id)} className={`px-4 py-3 rounded-sm shadow-md transition-all text-sm uppercase font-medium ${selectedHallId === hall.id ? 'bg-white scale-105 font-bold' : 'bg-white/70 hover:bg-white/90'}`}>
-            {hall.hall_name}
-          </button>
+          <HallTab key={hall.id} hall={hall} isActive={selectedHallId === hall.id} onClick={() => handleHallSelect(hall.id)} />
         ))}
       </div>
       {selectedHallId && (
-        <div className="mt-6 space-y-6">
-          <div>
-            <p className="font-normal text-base mb-2">Установите цены для типов кресел:</p>
-            <div className="flex items-center">
-              <label className="font-normal text-xs text-gray-600 block">Цена, рублей</label>
-              <input type="number" value={priceStandart} onChange={e => setPriceStandart(e.target.value)} className="p-2 border rounded ml-2 w-24 border-gray-400" />
-              <span className="ml-2 text-sm text-gray-700 flex items-center gap-2"> за <div className="w-5 h-5 rounded-sm border border-gray-700 bg-gray-400"></div> обычные кресла</span>
+        <div>
+          <p style={{
+            fontFamily: 'Roboto, sans-serif',
+            fontWeight: 400,
+            fontSize: '16px',
+            lineHeight: '18px',
+            color: '#000000',
+            margin: '0 0 12px 0',
+          }}>Установите цены для типов кресел:</p>
+
+          <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '20px' }}>
+            <div>
+              <label style={labelStyle}>Цена, рублей</label>
+              <input type="number" value={priceStandart} onChange={e => setPriceStandart(e.target.value)} style={inputStyle} />
             </div>
+            <span style={{ ...helperText, padding: '0 6px', marginBottom: '10px' }}> за </span>
+            <ChairIcon type="standart" style={{ marginBottom: '6px' }} />
+            <span style={{ ...helperText, marginBottom: '10px', marginLeft: '2px' }}> обычные кресла</span>
           </div>
-          <div className="flex items-center">
-            <label className="font-normal text-xs text-gray-600 block">Цена, рублей</label>
-            <input type="number" value={priceVip} onChange={e => setPriceVip(e.target.value)} className="p-2 border rounded ml-2 w-24 border-gray-400" />
-            <span className="ml-2 text-sm text-gray-700 flex items-center gap-2"> за <div className="w-5 h-5 rounded-sm border border-teal-700 bg-[#B0D6D8]"></div> VIP кресла</span>
+
+          <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '24px' }}>
+            <div>
+              <label style={labelStyle}>Цена, рублей</label>
+              <input type="number" value={priceVip} onChange={e => setPriceVip(e.target.value)} style={inputStyle} />
+            </div>
+            <span style={{ ...helperText, padding: '0 6px', marginBottom: '10px' }}> за </span>
+            <ChairIcon type="vip" style={{ marginBottom: '6px' }} />
+            <span style={{ ...helperText, marginBottom: '10px', marginLeft: '2px' }}> VIP кресла</span>
           </div>
-          <fieldset className="mt-8 flex justify-center gap-4">
-            <button onClick={() => selectedHallId && handleHallSelect(selectedHallId)} className="bg-white text-[#63536C] px-6 py-2 rounded-sm shadow-md hover:bg-gray-100 uppercase font-medium">Отмена</button>
-            <button onClick={handleSavePrice} className="bg-[#16A6AF] text-white px-6 py-2 rounded-sm shadow-md hover:bg-teal-600 uppercase font-medium">Сохранить</button>
-          </fieldset>
+
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginTop: '17px' }}>
+            <ButtonSecondary onClick={() => selectedHallId && handleHallSelect(selectedHallId)}>Отмена</ButtonSecondary>
+            <ButtonPrimary onClick={handleSavePrice}>Сохранить</ButtonPrimary>
+          </div>
         </div>
       )}
     </div>
@@ -345,12 +663,13 @@ const PriceConfiguration = () => {
 const SeanceGrid = () => {
   const { films, halls, seances, refreshData } = useData();
   const [isAddFilmModalOpen, setAddFilmModalOpen] = useState(false);
-  const [isAddSeanceModalOpen, setAddSeanceModalOpen] = useState(false);
   const [filmName, setFilmName] = useState('');
   const [filmDuration, setFilmDuration] = useState('');
   const [filmDescription, setFilmDescription] = useState('');
   const [filmOrigin, setFilmOrigin] = useState('');
   const [filmPoster, setFilmPoster] = useState(null);
+
+  const [pendingSeance, setPendingSeance] = useState(null);
   const [seanceHallId, setSeanceHallId] = useState('');
   const [seanceFilmId, setSeanceFilmId] = useState('');
   const [seanceTime, setSeanceTime] = useState('00:00');
@@ -403,8 +722,8 @@ const SeanceGrid = () => {
       }
     }
   };
-  
-  const handleAddSeance = async (e) => {
+
+  const handleConfirmSeance = async (e) => {
     e.preventDefault();
     if (!seanceHallId || !seanceFilmId || !seanceTime) {
       alert('Пожалуйста, заполните все поля');
@@ -417,12 +736,18 @@ const SeanceGrid = () => {
     try {
       await ApiService.createSeance(params);
       await refreshData();
-      setAddSeanceModalOpen(false);
-      setSeanceHallId(''); setSeanceFilmId(''); setSeanceTime('00:00');
+      closePendingSeance();
     } catch (error) {
       console.error('Failed to add seance:', error);
       alert('Не удалось добавить сеанс');
     }
+  };
+
+  const closePendingSeance = () => {
+    setPendingSeance(null);
+    setSeanceHallId('');
+    setSeanceFilmId('');
+    setSeanceTime('00:00');
   };
   
   const timeToMinutes = (time) => {
@@ -430,7 +755,7 @@ const SeanceGrid = () => {
     return hours * 60 + minutes;
   };
 
-  const handleDrop = async (e, hallId) => {
+  const handleDrop = (e, hallId) => {
     e.preventDefault();
     if (!draggedFilm.current) return;
     
@@ -441,97 +766,141 @@ const SeanceGrid = () => {
     const totalMinutes = 24 * 60;
     const startTimeInMinutes = Math.round((dropX / rect.width) * totalMinutes);
 
-    const hallSeances = seances.filter(s => s.seance_hallid === hallId);
-    const newSeanceStart = startTimeInMinutes;
-    const newSeanceEnd = newSeanceStart + film.film_duration;
-
-    const isOverlap = hallSeances.some(seance => {
-      const existingFilm = films.find(f => f.id === seance.seance_filmid);
-      if (!existingFilm) return false;
-      const existingStart = timeToMinutes(seance.seance_time);
-      const existingEnd = existingStart + existingFilm.film_duration;
-      return newSeanceStart < existingEnd && newSeanceEnd > existingStart;
-    });
-
-    if (isOverlap) {
-      alert('Ошибка: сеанс пересекается с существующим.');
-      return;
-    }
-
     const hours = String(Math.floor(startTimeInMinutes / 60)).padStart(2, '0');
     const minutes = String(startTimeInMinutes % 60).padStart(2, '0');
-    const seanceTime = `${hours}:${minutes}`;
+    const calcTime = `${hours}:${minutes}`;
 
-    const params = new FormData();
-    params.set('seanceHallid', String(hallId));
-    params.set('seanceFilmid', String(film.id));
-    params.set('seanceTime', seanceTime);
-    
-    try {
-      await ApiService.createSeance(params);
-      await refreshData();
-    } catch (error) {
-      console.error('Failed to add seance:', error);
-      alert('Не удалось добавить сеанс.');
-    }
+    setSeanceHallId(String(hallId));
+    setSeanceFilmId(String(film.id));
+    setSeanceTime(calcTime);
+    setPendingSeance({ hallId, filmId: film.id, time: calcTime });
   };
 
   const handleSeanceDragEnd = async () => {
     if (draggedSeanceId.current && !dropSuccess.current) {
-      if (window.confirm('Удалить сеанс?')) {
-        try {
-          await ApiService.deleteSeance(draggedSeanceId.current);
-          await refreshData();
-        } catch (e) {
-          alert('Ошибка удаления сеанса');
-        }
+      try {
+        await ApiService.deleteSeance(draggedSeanceId.current);
+        await refreshData();
+      } catch (e) {
+        alert('Ошибка удаления сеанса');
       }
     }
     draggedSeanceId.current = null;
   };
 
+  const modalLabelStyle = {
+    fontFamily: 'Roboto, sans-serif',
+    fontWeight: 400,
+    fontSize: '12px',
+    lineHeight: '14px',
+    color: '#848484',
+    display: 'block',
+    marginBottom: '2px',
+  };
+
+  const modalInputStyle = {
+    width: '100%',
+    height: '36px',
+    padding: '8px 12px',
+    background: '#FFFFFF',
+    border: '1px solid #B7B7B7',
+    fontFamily: 'Roboto, sans-serif',
+    fontSize: '16px',
+    lineHeight: '1.2em',
+    color: '#000000',
+    boxSizing: 'border-box',
+  };
+
   return (
     <div>
-      <div className="flex gap-4 mb-6">
-        <button onClick={() => setAddFilmModalOpen(true)} className="bg-[#16A6AF] text-white px-6 py-2 rounded-sm shadow-md hover:bg-teal-600 transition-colors uppercase font-medium">
+      <div style={{ marginBottom: '20px' }}>
+        <ButtonPrimary onClick={() => setAddFilmModalOpen(true)}>
           Добавить фильм
-        </button>
-        <button onClick={() => setAddSeanceModalOpen(true)} className="bg-[#16A6AF] text-white px-6 py-2 rounded-sm shadow-md hover:bg-teal-600 transition-colors uppercase font-medium">
-          Добавить сеанс
-        </button>
+        </ButtonPrimary>
       </div>
-      <div className="flex flex-wrap gap-4 mb-8">
+
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginBottom: '30px' }}>
         {films.map(film => (
           <div
             key={film.id}
             draggable
             onDragStart={() => { draggedFilm.current = film; dropSuccess.current = false; }}
             onDragEnd={() => { draggedFilm.current = null; }}
-            className="p-2 rounded cursor-grab flex items-center gap-2 shadow-md border border-black/30 w-full sm:w-auto"
-            style={{ backgroundColor: filmColors.get(film.id) || '#E0E0E0' }}
+            style={{
+              display: 'flex',
+              width: '259px',
+              backgroundColor: filmColors.get(film.id) || '#E0E0E0',
+              border: '1px solid rgba(0,0,0,0.3)',
+              cursor: 'grab',
+              position: 'relative',
+            }}
           >
-            <img src={film.film_poster} alt={film.film_name} className="w-10 h-14 object-cover" />
-            <div className="flex-grow pr-6 relative">
-              <p className="font-semibold text-sm">{film.film_name}</p>
-              <p className="text-xs text-black/70">{film.film_duration} минут</p>
-              <button onClick={() => handleDeleteFilm(film.id)} className="absolute top-1/2 -right-1 -translate-y-1/2 text-[#63536C] hover:text-gray-700 p-1">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z"/>
-                </svg>
-              </button>
+            <img
+              src={film.film_poster}
+              alt={film.film_name}
+              style={{ width: '38px', height: '50px', objectFit: 'cover', flexShrink: 0 }}
+            />
+            <div style={{ display: 'flex', alignItems: 'stretch', flex: 1, padding: '0 10px', gap: '10px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', justifyContent: 'center', flex: 1 }}>
+                <span style={{
+                  fontFamily: 'Roboto, sans-serif',
+                  fontWeight: 500,
+                  fontSize: '14px',
+                  lineHeight: '1.143em',
+                  color: '#000000',
+                }}>{film.film_name}</span>
+                <span style={{
+                  fontFamily: 'Roboto, sans-serif',
+                  fontWeight: 400,
+                  fontSize: '14px',
+                  lineHeight: '16px',
+                  color: 'rgba(0,0,0,0.7)',
+                }}>{film.film_duration} минут</span>
+              </div>
             </div>
+            <button
+              onClick={() => handleDeleteFilm(film.id)}
+              style={{
+                position: 'absolute',
+                right: '0',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'none',
+                border: 'none',
+                padding: '4px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <img src={`${assetBase}images/delete-film.svg`} alt="Удалить" width="20" height="20" />
+            </button>
           </div>
         ))}
       </div>
 
-      <div className="space-y-6">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '35px', padding: '0 35px' }}>
         {halls.map(hall => (
           <div key={hall.id}>
-            <h3 className="font-medium uppercase text-base">{hall.hall_name}</h3>
+            <h3 style={{
+              fontFamily: 'Roboto, sans-serif',
+              fontWeight: 500,
+              fontSize: '16px',
+              lineHeight: '18px',
+              textTransform: 'uppercase',
+              color: '#000000',
+              margin: '0 0 0 0',
+            }}>{hall.hall_name}</h3>
             <div
               onDragOver={(e) => e.preventDefault()}
               onDrop={(e) => handleDrop(e, hall.id)}
-              className="bg-gray-50 border border-gray-500 mt-2 h-20 relative"
+              style={{
+                border: '1px solid #848484',
+                height: '60px',
+                position: 'relative',
+                marginTop: '0',
+              }}
             >
               {seances.filter(s => s.seance_hallid === hall.id).map(seance => {
                 const film = films.find(f => f.id === seance.seance_filmid);
@@ -545,12 +914,53 @@ const SeanceGrid = () => {
                     onDragStart={() => { draggedSeanceId.current = seance.id; dropSuccess.current = false; }}
                     onDragEnd={handleSeanceDragEnd}
                     onDrop={(e) => { e.stopPropagation(); dropSuccess.current = true; }}
-                    className="absolute text-black text-xs p-1 rounded overflow-hidden whitespace-nowrap cursor-move shadow-lg border border-black/30"
-                    style={{ left: `${left}%`, width: `${width}%`, top: '0.5rem', bottom: '0.5rem', backgroundColor: filmColors.get(film.id) || '#E0E0E0' }}
+                    style={{
+                      position: 'absolute',
+                      left: `${left}%`,
+                      width: `${width}%`,
+                      top: '10px',
+                      height: '40px',
+                      backgroundColor: filmColors.get(film.id) || '#E0E0E0',
+                      border: '1px solid rgba(0,0,0,0.3)',
+                      padding: '10px',
+                      boxSizing: 'border-box',
+                      cursor: 'move',
+                      overflow: 'hidden',
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
                     title={`${film.film_name}, ${seance.seance_time}`}
                   >
-                    <p className="text-[10px] leading-tight font-medium">{film.film_name}</p>
-                    <p className="text-[9px]">{seance.seance_time}</p>
+                    <span style={{
+                      fontFamily: 'Roboto, sans-serif',
+                      fontWeight: 400,
+                      fontSize: '10px',
+                      lineHeight: '10px',
+                      color: '#000000',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}>{film.film_name}</span>
+                    <div style={{
+                      position: 'absolute',
+                      left: '1px',
+                      bottom: '-5px',
+                      width: '1px',
+                      height: '5px',
+                      background: '#848484',
+                    }} />
+                    <span style={{
+                      position: 'absolute',
+                      left: '-13px',
+                      bottom: '-18px',
+                      fontFamily: 'Roboto, sans-serif',
+                      fontWeight: 400,
+                      fontSize: '12px',
+                      lineHeight: '14px',
+                      color: '#848484',
+                      width: '30px',
+                      textAlign: 'center',
+                    }}>{seance.seance_time}</span>
                   </div>
                 );
               })}
@@ -559,135 +969,188 @@ const SeanceGrid = () => {
         ))}
       </div>
 
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginTop: '17px' }}>
+        <ButtonSecondary onClick={() => {}}>Отмена</ButtonSecondary>
+        <ButtonPrimary onClick={() => {}}>Сохранить</ButtonPrimary>
+      </div>
+
       {isAddFilmModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start z-[9999]" style={{ position: 'fixed', paddingTop: '120px' }}>
-          <div className="flex flex-col items-center w-[960px] relative" style={{ background: 'rgba(234, 233, 235, 0.95)' }}>
-            <div className="flex flex-row justify-between items-center w-full px-[42px] py-4 bg-[#63536C]">
-              <h3 className="font-bold text-[22px] leading-[25px] uppercase text-white m-auto">Добавление фильма</h3>
-              <button type="button" onClick={() => setAddFilmModalOpen(false)} className="w-[22px] h-[22px] text-white text-2xl leading-none hover:opacity-80">&times;</button>
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          zIndex: 9999,
+          paddingTop: '120px',
+        }}>
+          <div style={{ background: 'rgba(234, 233, 235, 0.95)', width: '960px' }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '0 42px',
+              height: '95px',
+              background: '#63536C',
+            }}>
+              <h3 style={{
+                fontFamily: 'Roboto, sans-serif',
+                fontWeight: 700,
+                fontSize: '22px',
+                lineHeight: '25px',
+                textTransform: 'uppercase',
+                color: '#FFFFFF',
+                margin: '0 auto',
+              }}>Добавление фильма</h3>
+              <button
+                type="button"
+                onClick={() => setAddFilmModalOpen(false)}
+                style={{ background: 'none', border: 'none', color: '#FFFFFF', fontSize: '28px', cursor: 'pointer', lineHeight: 1 }}
+              >&times;</button>
             </div>
-            <form onSubmit={handleAddFilm} className="flex flex-col items-center w-full gap-[34px] pb-[35px] pt-[34px]">
-              <div className="flex flex-col items-center gap-2 w-full">
-                <div className="flex flex-col items-start gap-[2px] w-[750px]">
-                  <label className="font-normal text-xs leading-[14px] text-[#848484]">Название фильма</label>
-                  <input
-                    type="text"
-                    value={filmName}
-                    onChange={e => setFilmName(e.target.value)}
-                    placeholder='Например, «Гражданин Кейн»'
-                    required
-                    className="w-full h-[35px] px-2 py-2 bg-white border border-[#B7B7B7] text-base text-gray-700 placeholder:text-[#757575]"
-                    style={{ fontFamily: 'Roboto' }}
-                  />
+            <form onSubmit={handleAddFilm} style={{
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '34px', padding: '34px 16px 35px',
+            }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '750px' }}>
+                <div>
+                  <label style={modalLabelStyle}>Название фильма</label>
+                  <input type="text" value={filmName} onChange={e => setFilmName(e.target.value)} placeholder='Например, «Гражданин Кейн»' required style={modalInputStyle} />
                 </div>
-                <div className="flex flex-col items-start gap-[2px] w-[750px]">
-                  <label className="font-normal text-xs leading-[14px] text-[#848484]">Продолжительность фильма (мин.)</label>
-                  <input
-                    type="number"
-                    value={filmDuration}
-                    onChange={e => setFilmDuration(e.target.value)}
-                    required
-                    className="w-full h-[36px] px-2 py-2 bg-white border border-[#B7B7B7] text-base text-gray-700"
-                    style={{ fontFamily: 'Roboto' }}
-                  />
+                <div>
+                  <label style={modalLabelStyle}>Продолжительность фильма (мин.)</label>
+                  <input type="number" value={filmDuration} onChange={e => setFilmDuration(e.target.value)} required style={modalInputStyle} />
                 </div>
-                <div className="flex flex-col items-start gap-[2px] w-[750px]">
-                  <label className="font-normal text-xs leading-[14px] text-[#848484]">Описание фильма</label>
+                <div>
+                  <label style={modalLabelStyle}>Описание фильма</label>
                   <textarea
                     value={filmDescription}
                     onChange={e => setFilmDescription(e.target.value)}
                     required
-                    className="w-[750px] min-w-[750px] max-w-[750px] h-[80px] min-h-[80px] max-h-[80px] px-2 py-2 bg-white border border-[#B7B7B7] text-base text-gray-700 resize-none"
-                    style={{ fontFamily: 'Roboto' }}
+                    style={{
+                      ...modalInputStyle,
+                      height: '80px',
+                      resize: 'none',
+                    }}
                   />
                 </div>
-                <div className="flex flex-col items-start gap-[2px] w-[750px]">
-                  <label className="font-normal text-xs leading-[14px] text-[#848484]">Страна</label>
-                  <input
-                    type="text"
-                    value={filmOrigin}
-                    onChange={e => setFilmOrigin(e.target.value)}
-                    required
-                    className="w-full h-[36px] px-2 py-2 bg-white border border-[#B7B7B7] text-base text-gray-700"
-                    style={{ fontFamily: 'Roboto' }}
-                  />
+                <div>
+                  <label style={modalLabelStyle}>Страна</label>
+                  <input type="text" value={filmOrigin} onChange={e => setFilmOrigin(e.target.value)} required style={modalInputStyle} />
                 </div>
               </div>
-              <div className="flex flex-row justify-center items-start gap-[14px]">
-                <button type="submit" className="flex justify-center items-center px-8 py-[11.2px] bg-[#16A6AF] text-white text-sm font-medium uppercase rounded-[3px] shadow-md hover:bg-[#148a92] transition-colors" style={{ boxShadow: '0px 3px 3px rgba(0, 0, 0, 0.24), 0px 0px 3px rgba(0, 0, 0, 0.12)' }}>
-                  Добавить фильм
-                </button>
-                <label className="flex justify-center items-center px-8 py-[11.2px] bg-[#16A6AF] text-white text-sm font-medium uppercase rounded-[3px] shadow-md hover:bg-[#148a92] transition-colors cursor-pointer" style={{ boxShadow: '0px 3px 3px rgba(0, 0, 0, 0.24), 0px 0px 3px rgba(0, 0, 0, 0.12)' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '14px' }}>
+                <ButtonPrimary type="submit">Добавить фильм</ButtonPrimary>
+                <label style={{
+                  height: '40px',
+                  padding: '11px 32px 12px',
+                  background: '#16A6AF',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  borderRadius: '3px',
+                  boxShadow: sectionShadow,
+                  fontFamily: 'Roboto, sans-serif',
+                  fontWeight: 500,
+                  fontSize: '14px',
+                  lineHeight: '1.143em',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  boxSizing: 'border-box',
+                }}>
                   Загрузить постер
-                  <input type="file" onChange={e => setFilmPoster(e.target.files ? e.target.files[0] : null)} required accept="image/png" className="hidden" />
+                  <input type="file" onChange={e => setFilmPoster(e.target.files ? e.target.files[0] : null)} required accept="image/png" style={{ display: 'none' }} />
                 </label>
-                <button type="button" onClick={() => setAddFilmModalOpen(false)} className="flex justify-center items-center px-8 py-[11.2px] bg-white text-[#63536C] text-sm font-medium uppercase rounded-[3px] shadow-md hover:bg-gray-100 transition-colors" style={{ boxShadow: '0px 3px 3px rgba(0, 0, 0, 0.24), 0px 0px 3px rgba(0, 0, 0, 0.12)' }}>
+                <ButtonSecondary onClick={() => setAddFilmModalOpen(false)} style={{ width: 'auto', padding: '11px 32px 12px' }}>
                   Отменить
-                </button>
+                </ButtonSecondary>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      {isAddSeanceModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start z-[9999]" style={{ position: 'fixed', paddingTop: '120px' }}>
-          <div className="flex flex-col items-center w-[960px] relative" style={{ background: 'rgba(234, 233, 235, 0.95)' }}>
-            <div className="flex flex-row justify-between items-center w-full px-[42px] py-4 bg-[#63536C]">
-              <h3 className="font-bold text-[22px] leading-[25px] uppercase text-white m-auto">Добавление сеанса</h3>
-              <button type="button" onClick={() => setAddSeanceModalOpen(false)} className="w-[22px] h-[22px] text-white text-2xl leading-none hover:opacity-80">&times;</button>
+      {pendingSeance && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          zIndex: 9999,
+          paddingTop: '120px',
+        }}>
+          <div style={{ background: 'rgba(234, 233, 235, 0.95)', width: '960px' }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '16px 42px 14px',
+              height: '57px',
+              boxSizing: 'border-box',
+              background: '#63536C',
+            }}>
+              <h3 style={{
+                fontFamily: 'Roboto, sans-serif',
+                fontWeight: 700,
+                fontSize: '22px',
+                lineHeight: '25px',
+                textTransform: 'uppercase',
+                color: '#FFFFFF',
+                margin: 0,
+              }}>Добавление сеанса</h3>
+              <button
+                type="button"
+                onClick={closePendingSeance}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  padding: 0,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '22px',
+                  height: '22px',
+                }}
+              >
+                <img src={`${assetBase}images/close.png`} alt="Закрыть" width="22" height="22" />
+              </button>
             </div>
-            <form onSubmit={handleAddSeance} className="flex flex-col items-center w-full gap-[34px] pb-[35px] pt-[34px]">
-              <div className="flex flex-col items-center gap-2 w-full">
-                <div className="flex flex-col items-start gap-[2px] w-[750px]">
-                  <label className="font-normal text-xs leading-[14px] text-[#848484]">Название зала</label>
-                  <select
-                    value={seanceHallId}
-                    onChange={e => setSeanceHallId(e.target.value)}
-                    required
-                    className="w-full h-[36px] px-3 py-2 bg-white border border-[#B7B7B7] text-base text-gray-700"
-                    style={{ fontFamily: 'Roboto' }}
-                  >
+            <form onSubmit={handleConfirmSeance} style={{
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '34px', padding: '24px 16px 35px',
+            }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '752px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                  <label style={modalLabelStyle}>Название зала</label>
+                  <select value={seanceHallId} onChange={e => setSeanceHallId(e.target.value)} required style={modalInputStyle}>
                     <option value="">Название зала</option>
                     {halls.map(hall => (
                       <option key={hall.id} value={hall.id}>{hall.hall_name}</option>
                     ))}
                   </select>
                 </div>
-                <div className="flex flex-col items-start gap-[2px] w-[750px]">
-                  <label className="font-normal text-xs leading-[14px] text-[#848484]">Название фильма</label>
-                  <select
-                    value={seanceFilmId}
-                    onChange={e => setSeanceFilmId(e.target.value)}
-                    required
-                    className="w-full h-[36px] px-3 py-2 bg-white border border-[#B7B7B7] text-base text-gray-700"
-                    style={{ fontFamily: 'Roboto' }}
-                  >
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                  <label style={modalLabelStyle}>Название фильма</label>
+                  <select value={seanceFilmId} onChange={e => setSeanceFilmId(e.target.value)} required style={modalInputStyle}>
                     <option value="">Название фильма</option>
                     {films.map(film => (
                       <option key={film.id} value={film.id}>{film.film_name}</option>
                     ))}
                   </select>
                 </div>
-                <div className="flex flex-col items-start gap-[2px] w-[750px]">
-                  <label className="font-normal text-xs leading-[14px] text-[#848484]">Время начала</label>
-                  <input
-                    type="time"
-                    value={seanceTime}
-                    onChange={e => setSeanceTime(e.target.value)}
-                    required
-                    className="w-full h-[36px] px-3 py-2 bg-white border border-[#B7B7B7] text-base text-gray-700"
-                    style={{ fontFamily: 'Roboto' }}
-                  />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                  <label style={modalLabelStyle}>Время начала</label>
+                  <input type="time" value={seanceTime} onChange={e => setSeanceTime(e.target.value)} required style={modalInputStyle} />
                 </div>
               </div>
-              <div className="flex flex-row justify-center items-start gap-[14px]">
-                <button type="submit" className="flex justify-center items-center px-8 py-[11.2px] bg-[#16A6AF] text-white text-sm font-medium uppercase rounded-[3px] shadow-md hover:bg-[#148a92] transition-colors" style={{ boxShadow: '0px 3px 3px rgba(0, 0, 0, 0.24), 0px 0px 3px rgba(0, 0, 0, 0.12)' }}>
-                  Добавить сеанс
-                </button>
-                <button type="button" onClick={() => setAddSeanceModalOpen(false)} className="flex justify-center items-center px-8 py-[11.2px] bg-white text-[#63536C] text-sm font-medium uppercase rounded-[3px] shadow-md hover:bg-gray-100 transition-colors" style={{ boxShadow: '0px 3px 3px rgba(0, 0, 0, 0.24), 0px 0px 3px rgba(0, 0, 0, 0.12)' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '14px' }}>
+                <ButtonPrimary type="submit">Добавить фильм</ButtonPrimary>
+                <ButtonSecondary onClick={closePendingSeance} style={{ width: '139px' }}>
                   Отменить
-                </button>
+                </ButtonSecondary>
               </div>
             </form>
           </div>
@@ -725,23 +1188,43 @@ const SalesManagement = () => {
   const selectedHall = halls.find(h => h.id === selectedHallId);
 
   return (
-    <div>
-      <p className="font-normal text-base">Выберите зал для открытия/закрытия продаж:</p>
-      <div className="flex flex-wrap gap-2 my-4">
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '29px' }}>
+      <p style={{
+        fontFamily: 'Roboto, sans-serif',
+        fontWeight: 400,
+        fontSize: '16px',
+        lineHeight: '18px',
+        color: '#000000',
+        margin: 0,
+        alignSelf: 'stretch',
+      }}>Выбирите зал для открытия/закрытия продаж:</p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0', alignSelf: 'stretch' }}>
         {halls.map(hall => (
-          <button key={hall.id} onClick={() => setSelectedHallId(hall.id)} className={`px-4 py-3 rounded-sm shadow-md transition-all text-sm uppercase font-medium ${selectedHallId === hall.id ? 'bg-white scale-105 font-bold' : 'bg-white/70 hover:bg-white/90'}`}>
-            {hall.hall_name}
-          </button>
+          <HallTab key={hall.id} hall={hall} isActive={selectedHallId === hall.id} onClick={() => setSelectedHallId(hall.id)} />
         ))}
       </div>
       
       {selectedHall && (
-        <div className="text-center mt-8">
-          <p className="font-normal text-base mb-4">Всё готово к открытию</p>
-          <button onClick={() => toggleSales(selectedHall.id)} className={`px-6 py-2 rounded-sm shadow-md text-white w-full sm:w-auto transition-colors uppercase font-medium ${selectedHall.hall_open === 1 ? 'bg-red-500 hover:bg-red-600' : 'bg-[#16A6AF] hover:bg-teal-600'}`}>
+        <>
+          <p style={{
+            fontFamily: 'Roboto, sans-serif',
+            fontWeight: 400,
+            fontSize: '16px',
+            lineHeight: '18px',
+            color: '#000000',
+            margin: 0,
+            textAlign: 'center',
+          }}>Всё готово к открытию</p>
+          <ButtonPrimary
+            onClick={() => toggleSales(selectedHall.id)}
+            style={{
+              width: '270px',
+              background: selectedHall.hall_open === 1 ? '#d9534f' : '#16A6AF',
+            }}
+          >
             {selectedHall.hall_open === 1 ? 'Приостановить продажу билетов' : 'Открыть продажу билетов'}
-          </button>
-        </div>
+          </ButtonPrimary>
+        </>
       )}
     </div>
   );
@@ -749,7 +1232,7 @@ const SalesManagement = () => {
 
 const AdminDashboard = () => {
   return (
-    <div className="max-w-5xl mx-auto">
+    <div style={{ width: '962px', maxWidth: '100%', margin: '0 auto' }}>
       <AdminSection title="Управление залами" initiallyOpen={true}>
         <HallsManagement />
       </AdminSection>

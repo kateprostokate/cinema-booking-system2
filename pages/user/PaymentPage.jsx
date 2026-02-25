@@ -61,11 +61,13 @@ const PaymentPage = () => {
     <div className="payment-page">
       <main className="payment-main layout-990">
         <section className="payment-section">
-          <div className="payment-strip payment-strip-top" />
+          <div className="decoration-strip" />
           <div className="payment-header">
             <h2 className="payment-title">Вы выбрали билеты:</h2>
           </div>
+          <div className="decoration-strip" />
 
+          <div className="decoration-strip" />
           <div className="payment-ticket-wrapper">
             <div className="payment-ticket-info">
               <p className="payment-line">
@@ -109,7 +111,7 @@ const PaymentPage = () => {
               <p className="payment-hint">Приятного просмотра!</p>
             </div>
           </div>
-          <div className="payment-strip payment-strip-bottom" />
+          <div className="decoration-strip" />
         </section>
       </main>
     </div>
