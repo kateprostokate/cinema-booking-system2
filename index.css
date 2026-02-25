@@ -1,3 +1,5 @@
+a { text-decoration: none; color: inherit; }
+
 /* Base layout helpers from Figma spec */
 .layout-990 { width: 990px; margin-left: auto; margin-right: auto; }
 .header-bar { padding: 14px; height: 68px; }
@@ -16,9 +18,10 @@
 .heading-1-subtitle {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
-  text-transform: none;
+  font-size: 10px;
+  line-height: 12px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
   color: #FFFFFF;
 }
 .btn-login-figma {
@@ -179,22 +182,13 @@
   margin-top: 0;
 }
 
-/* "Оторванный билет" — декоративные полоски сверху и снизу */
-.payment-strip {
+.decoration-strip {
   width: 990px;
   max-width: 100%;
   height: 3px;
-  background-image: url('/images/ticket-border.png');
+  background-image: url('/images/strip-before.png');
+  background-size: 10px 3px;
   background-repeat: repeat-x;
-  background-size: auto 3px;
-}
-
-.payment-strip-top {
-  margin-bottom: 0;
-}
-
-.payment-strip-bottom {
-  margin-top: 0;
 }
 
 .payment-ticket-info {
@@ -369,7 +363,7 @@
 .hall-scheme-row {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   gap: 4px;
 }
 
@@ -523,10 +517,22 @@
 }
 .movie-poster { width: 125px; height: 205px; padding-bottom: 0; position: relative; flex: 0 0 125px; }
 .movie-poster img { width: 125px; height: 175px; object-fit: cover; display: block; }
+.movie-poster::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 125px;
+  height: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: none;
+  box-sizing: border-box;
+}
 .movie-description { padding-left: 15px; gap: 10px; width: auto; height: auto; display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; word-break: break-word; }
 .movie-title { font-weight: 700; font-size: 16px; line-height: 18px; color: #000; }
 .movie-synopsis { font-weight: 400; font-size: 14px; line-height: 16px; color: #000; }
-.movie-meta { display: flex; gap: 2.5px; font-weight: 300; font-size: 14px; line-height: 16px; color: #000; }
+.movie-meta { display: flex; gap: 5px; font-weight: 300; font-size: 14px; line-height: 16px; color: #000; }
 
 .hall-block {
   display: flex;
@@ -547,8 +553,9 @@
 .seances-row { display: flex; flex-wrap: wrap; gap: 4px; padding-bottom: 4px; width: 100%; box-sizing: border-box; }
 .seance-chip { flex: 0 0 53px; width: 53px; height: 33px; border-radius: 2px; background: #fff;
   box-shadow: 0px 2px 2px rgba(0,0,0,0.24), 0px 0px 2px rgba(0,0,0,0.12);
-  display: flex; align-items: center; justify-content: center; font-size: 15px; line-height: 17px; color: #000; }
-.seance-chip.disabled { background: #e5e7eb; color: #6b7280; cursor: not-allowed; }
+  display: flex; align-items: center; justify-content: center; font-size: 15px; line-height: 17px; color: #000;
+  text-decoration: none; }
+.seance-chip.disabled { background: #e5e7eb; color: #6b7280; cursor: not-allowed; pointer-events: none; }
 
 /* Day navigator wrapper (approximation) */
 .page-nav { height: 58px; padding-bottom: 10px; }

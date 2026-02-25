@@ -4,28 +4,46 @@ import ApiService from '../../services/api';
 import { useData } from '../../contexts/DataContext';
 
 const Seat = ({ type, onClick, isSelected }) => {
-  const baseClasses = 'w-4 h-4 sm:w-6 sm:h-6 rounded-sm m-1';
-  const selectedClasses = 'ring-2 ring-teal-400 ring-offset-2 ring-offset-gray-800';
-  let typeClasses = '';
+  const base = {
+    boxSizing: 'border-box',
+    borderRadius: '4px',
+    border: '1px solid #525252',
+    cursor: type === 'standart' || type === 'vip' ? 'pointer' : 'default',
+  };
 
-  switch (type) {
-    case 'standart':
-      typeClasses = 'bg-white hover:bg-gray-300 cursor-pointer';
-      break;
-    case 'vip':
-      typeClasses = 'bg-orange-400 hover:bg-orange-500 cursor-pointer';
-      break;
-    case 'taken':
-      typeClasses = 'bg-gray-600 cursor-not-allowed';
-      break;
-    case 'disabled':
-      typeClasses = 'bg-transparent cursor-not-allowed';
-      break;
-    default:
-      break;
+  if (isSelected) {
+    Object.assign(base, {
+      width: '24px',
+      height: '24px',
+      background: '#25C4CE',
+      boxShadow: '0 0 4px #16A6AF',
+    });
+  } else {
+    base.width = '20px';
+    base.height = '20px';
+    switch (type) {
+      case 'standart':
+        base.background = '#FFFFFF';
+        break;
+      case 'vip':
+        base.background = '#F9953A';
+        break;
+      case 'taken':
+        base.background = 'transparent';
+        break;
+      case 'disabled':
+        base.background = 'transparent';
+        base.border = 'none';
+        break;
+    }
   }
 
-  return <div className={`${baseClasses} ${typeClasses} ${isSelected ? selectedClasses : ''}`} onClick={type === 'standart' || type === 'vip' ? onClick : undefined} />;
+  return (
+    <div
+      style={base}
+      onClick={type === 'standart' || type === 'vip' ? onClick : undefined}
+    />
+  );
 };
 
 const HallPage = () => {
@@ -119,7 +137,7 @@ const HallPage = () => {
 
           <div className="hall-scheme">
             <div className="hall-scheme-screen">
-              <img src={`${import.meta.env.BASE_URL}images/screen.png`} alt="Экран" className="hall-scheme-screen-image" />
+              <img src="/images/screen.png" alt="Экран" className="hall-scheme-screen-image" />
             </div>
             <div className="hall-scheme-wrapper">
               {hallConfig.map((row, rowIndex) => (

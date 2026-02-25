@@ -25,12 +25,12 @@ const Header = () => {
               ИДЕМ<span className="heading-1-thin">В</span>КИНО
             </span>
             {isAdminPage && (
-              <span className="heading-1-subtitle">Администраторррская</span>
+              <span className="heading-1-subtitle">Администраторская</span>
             )}
           </h1>
         </Link>
 
-        {!isAdmin && isClientSide && (
+        {!isAdmin && isClientSide && location.pathname === '/' && (
           <Link to="/admin/login" className="btn-login-figma hover:opacity-90 transition-opacity">
             Войти
           </Link>
@@ -70,9 +70,8 @@ const AppContent = () => {
 
   // Apply your design: gradient overlay directly in backgroundImage for admin pages,
   // and remove the extra full-screen black overlay.
-  const baseUrl = import.meta.env.BASE_URL;
-  const adminBg = `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${baseUrl}images/admin-bg.jpg')`;
-  const clientBg = `url('${baseUrl}images/cinema-bg.jpg')`;
+  const adminBg = "linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/admin-bg.jpg')";
+  const clientBg = "url('/images/cinema-bg.jpg')";
 
   return (
     <div
@@ -81,7 +80,7 @@ const AppContent = () => {
     >
       <div className="min-h-screen">
         <Header />
-        <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main className="py-8">
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/hall/:seanceId" element={<HallPage />} />
