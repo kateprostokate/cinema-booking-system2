@@ -67,11 +67,12 @@ const ProtectedRoute = ({ children }) => {
 const AppContent = () => {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith('/admin');
+  const baseUrl = import.meta.env.BASE_URL;
 
   // Apply your design: gradient overlay directly in backgroundImage for admin pages,
   // and remove the extra full-screen black overlay.
-  const adminBg = "linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/admin-bg.jpg')";
-  const clientBg = "url('/images/cinema-bg.jpg')";
+  const adminBg = `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${baseUrl}images/admin-bg.jpg')`;
+  const clientBg = `url('${baseUrl}images/cinema-bg.jpg')`;
 
   return (
     <div

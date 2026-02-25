@@ -50,6 +50,7 @@ const HallPage = () => {
   const { seanceId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const baseUrl = import.meta.env.BASE_URL;
   const { halls, films, seances } = useData();
   const [hallConfig, setHallConfig] = useState(null);
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -137,7 +138,7 @@ const HallPage = () => {
 
           <div className="hall-scheme">
             <div className="hall-scheme-screen">
-              <img src="/images/screen.png" alt="Экран" className="hall-scheme-screen-image" />
+              <img src={`${baseUrl}images/screen.png`} alt="Экран" className="hall-scheme-screen-image" />
             </div>
             <div className="hall-scheme-wrapper">
               {hallConfig.map((row, rowIndex) => (

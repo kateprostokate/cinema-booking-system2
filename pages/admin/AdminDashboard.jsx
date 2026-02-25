@@ -4,6 +4,7 @@ import { useData } from '../../contexts/DataContext';
 
 const sectionShadow = '0px 0px 3px 0px rgba(0,0,0,0.12), 0px 3px 3px 0px rgba(0,0,0,0.24)';
 const activeTabShadow = '0px 0px 2px 0px rgba(0,0,0,0.12), 0px 2px 2px 0px rgba(0,0,0,0.24), 0px 6px 8px 0px rgba(0,0,0,0.24)';
+const assetBase = import.meta.env.BASE_URL;
 
 const HallTab = ({ hall, isActive, onClick }) => (
   <button
@@ -163,7 +164,7 @@ const AdminSection = ({ title, children, initiallyOpen = false }) => {
           margin: 0,
         }}>{title}</h2>
         <img
-          src="/images/chevron.svg"
+          src={`${assetBase}images/chevron.svg`}
           alt=""
           width="24"
           height="16"
@@ -243,7 +244,7 @@ const HallsManagement = () => {
               onClick={() => handleDeleteHall(hall.id)}
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
             >
-              <img src="/images/delete-hall.svg" alt="Удалить" width="20" height="20" />
+              <img src={`${assetBase}images/delete-hall.svg`} alt="Удалить" width="20" height="20" />
             </button>
           </li>
         ))}
@@ -873,7 +874,7 @@ const SeanceGrid = () => {
                 justifyContent: 'center',
               }}
             >
-              <img src="/images/delete-film.svg" alt="Удалить" width="20" height="20" />
+              <img src={`${assetBase}images/delete-film.svg`} alt="Удалить" width="20" height="20" />
             </button>
           </div>
         ))}
@@ -1115,7 +1116,7 @@ const SeanceGrid = () => {
                   height: '22px',
                 }}
               >
-                <img src="/images/close.png" alt="Закрыть" width="22" height="22" />
+                <img src={`${assetBase}images/close.png`} alt="Закрыть" width="22" height="22" />
               </button>
             </div>
             <form onSubmit={handleConfirmSeance} style={{
